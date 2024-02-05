@@ -13,7 +13,16 @@ class NoteSerializer(serializers.ModelSerializer):
         
     
     def get_user(self, instance):
-        pass
+        
+        if instance:
+            user_instance = instance.user
+            return  {
+                "id" : user_instance.id,
+                "username" : user_instance.username,
+                "email" : user_instance.email
+            }
+        else:
+            return None
     
     
     def to_representation(self, instance):
