@@ -1,6 +1,7 @@
-from core.models.useradmin import UserAdmin
-
+from core.admin.useradmin import UserAdmin
+from core.admin.noteadmin import NoteAdmin
 
 __all__ = [
-    "UserAdmin"
+    "UserAdmin",
+    "NoteAdmin",
 ]
