@@ -31,6 +31,12 @@ urlpatterns = [
         
         # API v1.0.0
         path('v1/', include('core.api.v1.urls')),
+        
+        # Djoser API Authentication View 
+        path('auth/', include([
+            path('', include('djoser.urls')),
+            path('users/', include('djoser.urls.jwt'))
+        ])),
     ]))
 
 ]
