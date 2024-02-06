@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
+from rest_framework_simplejwt.views import TokenBlacklistView
 
 
 route = routers.DefaultRouter()
@@ -35,7 +36,8 @@ urlpatterns = [
         # Djoser API Authentication View 
         path('auth/', include([
             path('', include('djoser.urls')),
-            path('users/', include('djoser.urls.jwt'))
+            path('users/', include('djoser.urls.jwt')),
+            path('users/jwt/blacklist', TokenBlacklistView.as_view(), name="token-blacklist")
         ])),
     ]))
 
