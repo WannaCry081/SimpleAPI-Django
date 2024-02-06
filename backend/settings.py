@@ -141,3 +141,10 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
 }
+
+DJOSER = {
+    'SERIALIZERS': {
+        'user': 'core.api.v1.serializers.UserSerializer',
+        'current_user': 'core.api.v1.serializers.UserSerializer',
+    },
+}
