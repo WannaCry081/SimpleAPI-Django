@@ -9,6 +9,7 @@ djangorestframework = "*"
 djangorestframework-simplejwt = "*"
 djoser = "*"
 djangorestframework-xml = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
