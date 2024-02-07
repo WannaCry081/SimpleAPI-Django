@@ -15,17 +15,20 @@ class NoteViewSet(viewsets.GenericViewSet,
     
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [JWTAuthentication]
+    # permission_classes = [IsAuthenticated]
+    # authentication_classes = [JWTAuthentication]
+    permission_classes = []
+    authentication_classes = []
+    search_fields = ["title", "body"]
     ordering_fields = ["title", "created_at"]
     ordering = ["-created_at"]
     
     
-    def list(self, request, *args, **kwargs):
+    # def list(self, request, *args, **kwargs):
          
-        notes = Note.objects.filter(user_id = request.user)
-        serializer = NoteSerializer(notes, many = True).data
-        return Response(serializer)
+    #     notes = Note.objects.filter(user_id = request.user)
+    #     serializer = NoteSerializer(notes, many = True).data
+    #     return Response(serializer)
         
     
     def create(self, request, *args, **kwargs):
