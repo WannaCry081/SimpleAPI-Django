@@ -1,5 +1,6 @@
 from rest_framework import viewsets, mixins, status
 from rest_framework.response import Response
+from rest_framework.throttling import UserRateThrottle
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from core.api.v1.serializers import NoteSerializer, UserSerializer
@@ -21,6 +22,7 @@ class NoteViewSet(viewsets.GenericViewSet,
     search_fields = ["title", "body"]
     ordering_fields = ["title", "created_at"]
     ordering = ["-created_at"]
+    throttle_classes = [UserRateThrottle]
     
     
     def list(self, request, *args, **kwargs):
