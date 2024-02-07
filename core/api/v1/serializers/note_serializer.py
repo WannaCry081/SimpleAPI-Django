@@ -10,6 +10,7 @@ class NoteSerializer(serializers.ModelSerializer):
         model = Note
         fields = ["id", "title", "body", "user"]
         read_only_fields = ("created_at", "updated_at")
+        unique_together = ("title")
         
     
     def get_user(self, instance):
