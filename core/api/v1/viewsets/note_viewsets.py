@@ -26,10 +26,15 @@ class NoteViewSet(viewsets.GenericViewSet,
     
     
     def list(self, request, *args, **kwargs):
-         
-        notes = Note.objects.filter(user_id = request.user)
-        serializer = NoteSerializer(notes, many = True).data
-        return Response(serializer)
+        notes = Note.objects.filter(user_id=request.user)
+
+        page = self.paginate_queryset(notes)
+        if page is not None:
+            serializer = NoteSerializer(page, many=True).data
+            return self.get_paginated_response(serializer)
+
+        serializer = NoteSerializer(notes, many=True).data
+        return Response(serializer, status = status.HTTP_200_OK)
         
     
     def create(self, request, *args, **kwargs):
