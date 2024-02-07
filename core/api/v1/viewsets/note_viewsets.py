@@ -25,4 +25,11 @@ class NoteViewSet(viewsets.GenericViewSet,
         return Response(serializer)
         
     
-    
+    def create(self, request, *args, **kwargs):
+        serializer = NoteSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        note = serializer.save(user_id=request.user)
+        response_data = NoteSerializer(note).data
+        
+        return Response(response_data, status=status.HTTP_201_CREATED)
