@@ -15,7 +15,7 @@ class NoteSerializer(serializers.ModelSerializer):
     def get_user(self, instance):
         
         if instance:
-            user_instance = instance.user
+            user_instance = instance.user_id
             return  {
                 "id" : user_instance.id,
                 "username" : user_instance.username,
