@@ -43,3 +43,6 @@ class NoteViewSet(viewsets.GenericViewSet,
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
     
+
+    def destroy(self, request, *args, **kwargs):
+        return super().destroy(request, *args, **kwargs)
