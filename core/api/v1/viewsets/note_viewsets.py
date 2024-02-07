@@ -17,3 +17,12 @@ class NoteViewSet(viewsets.GenericViewSet,
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
     
+    
+    def list(self, request, *args, **kwargs):
+         
+        notes = Note.objects.filter(user_id = request.user)
+        serializer = NoteSerializer(notes, many = True).data
+        return Response(serializer)
+        
+    
+    
