@@ -151,14 +151,22 @@ DJOSER = {
     'LOGIN_FIELD' : 'email',
     'USER_CREATE_PASSWORD_RETYPE' : True,
     'USERNAME_CHANGED_EMAIL_CONFIRMATION' : True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
     'USERNAME_CHANGED_PASSWORD_CONFIRMATION' : True,
+    'SET_USERNAME_RETYPE': True,
+    'SET_PASSWORD_RETYPE': True,
     'SEND_CONFIRMATION_EMAIL' : True,
     'SEND_ACTIVATION_EMAIL' : True,
-    'ACTIVATION_URL' : 'api/auth/users/activation/{uid}/{token}',
+    'ACTIVATION_URL' : 'activate/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': 'email/reset/confirm/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_RETYPE' : True,
     'SERIALIZERS': {
         'user': 'core.api.v1.serializers.UserSerializer',
         'current_user': 'core.api.v1.serializers.UserSerializer',
     },
+    
+    
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
