@@ -4,11 +4,12 @@ from core.models import Note
 class NoteSerializer(serializers.ModelSerializer):
     
     user = serializers.StringRelatedField()
+    word_count = serializers.SerializerMethodField(method_name = "count_words")
     
     class Meta:
         
         model = Note
-        fields = ["id", "title", "body", "user"]
+        fields = ["id", "title", "body", "user", "word_count"]
         read_only_fields = ("created_at", "updated_at")
         unique_together = ("title")
         
@@ -32,3 +33,7 @@ class NoteSerializer(serializers.ModelSerializer):
         data["user"] = self.get_user(instance)
         return data
     
+    
+    def count_words(self, note : Note):
+        return len(note.body.split(" "))
+        
