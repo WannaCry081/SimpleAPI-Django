@@ -17,6 +17,8 @@ class NoteViewSet(viewsets.GenericViewSet,
     serializer_class = NoteSerializer
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
+    ordering_fields = ["title", "created_at"]
+    ordering = ["-created_at"]
     
     
     def list(self, request, *args, **kwargs):
