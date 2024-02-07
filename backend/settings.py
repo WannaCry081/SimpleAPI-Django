@@ -149,8 +149,10 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.UserRateThrottle'
     ],
     'DEFAULT_THROTTLE_RATES' : {
-        'user' : '10/minute'
-    }
+        'user' : '20/minute'
+    },
+    'DEFAULT_PAGINATION_CLASS' : 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE' : 10
 }
 
 SIMPLE_JWT = {
