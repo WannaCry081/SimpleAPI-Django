@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from core.models import Note
+import bleach 
 
 class NoteSerializer(serializers.ModelSerializer):
     
@@ -13,6 +14,14 @@ class NoteSerializer(serializers.ModelSerializer):
         read_only_fields = ("created_at", "updated_at")
         unique_together = ("title")
         
+    
+    def validate(self, attrs):
+        
+        attrs["title"] = bleach.clean(attrs["title"])
+        attrs["body"] = bleach.clean(attrs["body"])
+
+        return super().validate(attrs)
+    
     
     def get_user(self, instance):
         
