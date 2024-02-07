@@ -10,6 +10,7 @@ djangorestframework-simplejwt = "*"
 djoser = "*"
 djangorestframework-xml = "*"
 python-dotenv = "*"
+bleach = "*"
 
 [dev-packages]
 
