@@ -140,7 +140,10 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES' : [
         'rest_framework.permissions.IsAuthenticated'
-    ]
+    ], 
+    'DEFAULT_FILTER_BACKEND' : [
+        'rest_framework.filters.OrderingFilter'
+    ],
 }
 
 SIMPLE_JWT = {
@@ -168,8 +171,6 @@ DJOSER = {
         'user': 'core.api.v1.serializers.UserSerializer',
         'current_user': 'core.api.v1.serializers.UserSerializer',
     },
-    
-    
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
