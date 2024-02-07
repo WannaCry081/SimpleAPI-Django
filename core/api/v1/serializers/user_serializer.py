@@ -8,3 +8,4 @@ class UserSerializer(serializers.ModelSerializer):
         
         model = User
         fields = ["id", "email", "username", "first_name", "middle_name", "last_name"]
+        unique_together = ("email", "username")
