@@ -145,6 +145,12 @@ REST_FRAMEWORK = {
         'rest_framework.filters.OrderingFilter',
         'rest_framework.filters.SearchFilter'
     ],
+    'DEFAULT_THROTTLING_CLASSES': [
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES' : {
+        'user' : '10/minute'
+    }
 }
 
 SIMPLE_JWT = {
