@@ -86,6 +86,18 @@ class NoteViewSet(viewsets.GenericViewSet,
         
         return Response(response_data, status=status.HTTP_201_CREATED)
     
+    
+    @swagger_auto_schema(
+        operation_summary="Retrieve details of a specific note",
+        operation_description="This endpoint retrieves details of a specific note for the authenticated user.", 
+        responses = {
+            status.HTTP_200_OK : openapi.Response("Ok", NoteSerializer()),
+            status.HTTP_204_NO_CONTENT : openapi.Response("No Content"),
+            status.HTTP_401_UNAUTHORIZED: openapi.Response("Unauthorized"),
+            status.HTTP_403_FORBIDDEN: openapi.Response("Forbidden"),
+            status.HTTP_500_INTERNAL_SERVER_ERROR : openapi.Response("Internal Server Error")
+        }
+    )
     def retrieve(self, request, *args, **kwargs):
         return super().retrieve(request, *args, **kwargs)
 
