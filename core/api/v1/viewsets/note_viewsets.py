@@ -70,7 +70,7 @@ class NoteViewSet(viewsets.GenericViewSet,
             status.HTTP_403_FORBIDDEN: openapi.Response("Forbidden"),
             status.HTTP_500_INTERNAL_SERVER_ERROR : openapi.Response("Internal Server Error")
         }, 
-        consumes = ["application/json", "application/xml"],
+        consumes = ["application/json"],
         produces = ["application/json", "application/xml", "text/html"],
     )
     def create(self, request, *args, **kwargs):
@@ -96,7 +96,8 @@ class NoteViewSet(viewsets.GenericViewSet,
             status.HTTP_401_UNAUTHORIZED: openapi.Response("Unauthorized"),
             status.HTTP_403_FORBIDDEN: openapi.Response("Forbidden"),
             status.HTTP_500_INTERNAL_SERVER_ERROR : openapi.Response("Internal Server Error")
-        }
+        },
+        produces = ["application/json", "application/xml", "text/html"]
     )
     def retrieve(self, request, *args, **kwargs):
         return super().retrieve(request, *args, **kwargs)
