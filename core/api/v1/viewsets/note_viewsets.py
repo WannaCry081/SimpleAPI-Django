@@ -7,6 +7,11 @@ from core.api.v1.serializers import NoteSerializer, UserSerializer
 from core.models import Note
 from core.versions import LegacyAPIVersion
 
+from rest_framework.decorators import action
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+
+
 class NoteViewSet(viewsets.GenericViewSet, 
                   mixins.ListModelMixin,
                   mixins.CreateModelMixin,
@@ -37,7 +42,6 @@ class NoteViewSet(viewsets.GenericViewSet,
         serializer = NoteSerializer(notes, many=True).data
         return Response(serializer, status = status.HTTP_200_OK)
         
-    
     def create(self, request, *args, **kwargs):
         serializer = NoteSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -47,14 +51,15 @@ class NoteViewSet(viewsets.GenericViewSet,
         
         return Response(response_data, status=status.HTTP_201_CREATED)
     
-    
     def retrieve(self, request, *args, **kwargs):
         return super().retrieve(request, *args, **kwargs)
-    
-    
+
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
     
-
+    
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
+    
     def destroy(self, request, *args, **kwargs):
         return super().destroy(request, *args, **kwargs)
