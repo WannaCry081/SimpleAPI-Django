@@ -29,23 +29,33 @@ class NoteViewSet(viewsets.GenericViewSet,
     ordering = ["-created_at"]
     throttle_classes = [UserRateThrottle]
     
+    
     @swagger_auto_schema(
         operation_summary="List all notes for the authenticated user",
         operation_description="This endpoint returns a list of notes for the authenticated user.",
         responses={
-            status.HTTP_200_OK: openapi.Response("Ok", NoteSerializer(many=True))
+            status.HTTP_200_OK: openapi.Response("Ok", NoteSerializer(many=True)),
+            status.HTTP_204_NO_CONTENT : openapi.Response("No Content"),
+            status.HTTP_401_UNAUTHORIZED: openapi.Response("Unauthorized"),
+            status.HTTP_403_FORBIDDEN: openapi.Response("Forbidden"),
+            status.HTTP_500_INTERNAL_SERVER_ERROR : openapi.Response("Internal Server Error")
         },
         produces = ["application/json", "application/xml", "text/html"]
     )
     def list(self, request, *args, **kwargs):
-        notes = Note.objects.filter(user_id=request.user)
+        try:
+            notes = Note.objects.filter(user_id=request.user)
 
-        page = self.paginate_queryset(notes)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True).data
-            return self.get_paginated_response(serializer)
+            page = self.paginate_queryset(notes)
+            if page is not None:
+                serializer = self.get_serializer(page, many=True).data
+                return self.get_paginated_response(serializer)
 
-        serializer = self.get_serializer(notes, many=True).data
+            serializer = self.get_serializer(notes, many=True).data
+            
+        except:
+            return Reponse({"details" : "Internal Server Error"}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
         return Response(serializer, status = status.HTTP_200_OK)
         
     def create(self, request, *args, **kwargs):
