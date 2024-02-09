@@ -16,9 +16,12 @@ class NoteSerializer(serializers.ModelSerializer):
         
     
     def validate(self, attrs):
-        
-        attrs["title"] = bleach.clean(attrs["title"])
-        attrs["body"] = bleach.clean(attrs["body"])
+
+        if "title" in attrs:
+            attrs["title"] = bleach.clean(attrs["title"])
+
+        if "body" in attrs:
+            attrs["body"] = bleach.clean(attrs["body"])
 
         return super().validate(attrs)
     
