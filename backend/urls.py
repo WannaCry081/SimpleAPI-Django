@@ -16,8 +16,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.views import TokenBlacklistView
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title='Simple API - Django',
+        default_version='v1.0.0',
+        description='A Simple Note API that implements the best practices for developing an Application Programming Interface (API) using Django Rest Framework',
+    ),
+    public=True,
+    authentication_classes = (JWTAuthentication,),
+    permission_classes=(AllowAny,),
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,8 +47,11 @@ urlpatterns = [
         path('auth/', include([
             path('', include('djoser.urls')),
             path('users/', include('djoser.urls.jwt')),
-            path('users/jwt/blacklist', TokenBlacklistView.as_view(), name="token-blacklist")
+            path('users/jwt/blacklist', TokenBlacklistView.as_view(), name='token-blacklist')
         ])),
-    ]))
-
+    ])),
+    
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
 ]
