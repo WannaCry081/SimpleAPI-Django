@@ -119,13 +119,29 @@ class NoteViewSet(viewsets.GenericViewSet,
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
     
+    
+    @swagger_auto_schema(
+        operation_summary="Partially update details of a specific note",
+        operation_description="This endpoint partially updates details of a specific note for the authenticated user.",
+        request_body=NoteSerializer,
+        responses={
+            status.HTTP_200_OK: openapi.Response("Ok", NoteSerializer()),
+            status.HTTP_401_UNAUTHORIZED: openapi.Response("Unauthorized"),
+            status.HTTP_403_FORBIDDEN: openapi.Response("Forbidden"),
+            status.HTTP_500_INTERNAL_SERVER_ERROR : openapi.Response("Internal Server Error")
+        },
+        consumes = ["application/json"],
+        produces = ["application/json", "application/xml", "text/html"]
+    )
     def partial_update(self, request, *args, **kwargs):
+        try:
+            instance = self.get_object()
+            serializer = self.get_serializer(instance, data=request.data, partial=True)
+            serializer.is_valid(raise_exception = True)
+            self.perform_update(serializer)
+        except:
+            return Response({"details": "Internal Server Error"}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
         
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=True)
-        serializer.is_valid(raise_exception = True)
-        self.perform_update(serializer)
-
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def destroy(self, request, *args, **kwargs):
