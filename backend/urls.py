@@ -16,22 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers
 from rest_framework_simplejwt.views import TokenBlacklistView
 
-
-route = routers.DefaultRouter()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('api/', include([
-        
-        # Rest Framework API View
-        path('', include(route.urls)),
-        
-        # API v1.0.0
-        path('v1/', include('core.api.v1.urls')),
+    
+        # Routing for core app
+        path('', include('core.urls')),
         
         # Djoser API Authentication View 
         path('auth/', include([
