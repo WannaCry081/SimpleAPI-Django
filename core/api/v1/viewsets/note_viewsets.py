@@ -57,13 +57,32 @@ class NoteViewSet(viewsets.GenericViewSet,
             return Reponse({"details" : "Internal Server Error"}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
         
         return Response(serializer, status = status.HTTP_200_OK)
-        
+    
+    
+    @swagger_auto_schema(
+        operation_summary = "Create a new note for the authenticated user",
+        operation_description = "This endpoint allows the authenticated user to create a new note.",
+        request_body = NoteSerializer,
+        responses = {
+            status.HTTP_201_CREATED: openapi.Response("Created", NoteSerializer),
+            status.HTTP_400_BAD_REQUEST: openapi.Response('Bad Request'),
+            status.HTTP_401_UNAUTHORIZED: openapi.Response("Unauthorized"),
+            status.HTTP_403_FORBIDDEN: openapi.Response("Forbidden"),
+            status.HTTP_500_INTERNAL_SERVER_ERROR : openapi.Response("Internal Server Error")
+        }, 
+        consumes = ["application/json", "application/xml"],
+        produces = ["application/json", "application/xml", "text/html"],
+    )
     def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        try:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            
+            note = serializer.save(user_id=request.user)
+            response_data = self.get_serializer(note).data
         
-        note = serializer.save(user_id=request.user)
-        response_data = self.get_serializer(note).data
+        except: 
+            return Response({"details" : "Internal Server Error"}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
         
         return Response(response_data, status=status.HTTP_201_CREATED)
     
