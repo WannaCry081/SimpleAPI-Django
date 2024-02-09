@@ -5,7 +5,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from core.api.v1.serializers import NoteSerializer, UserSerializer
 from core.models import Note
-
+from core.versions import LegacyAPIVersion
 
 class NoteViewSet(viewsets.GenericViewSet, 
                   mixins.ListModelMixin,
@@ -14,6 +14,7 @@ class NoteViewSet(viewsets.GenericViewSet,
                   mixins.UpdateModelMixin,
                   mixins.DestroyModelMixin):
     
+    versioning_class = LegacyAPIVersion
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
     permission_classes = [IsAuthenticated]
