@@ -11,91 +11,96 @@ class NoteViewSetTestCase(TestCase):
         self.factory = APIRequestFactory()
 
         self.user = User.objects.create_user(
-            username='testuser', 
-            first_name='John',
-            last_name='Doe',
-            email='testuser@sample.com', 
-            password='testpassword'
+            username="testuser", 
+            first_name="John",
+            last_name="Doe",
+            email="testuser@sample.com", 
+            password="testpassword"
         )
 
         response = self.client.post(
-            '/api/auth/users/jwt/create', {
-                'email': 'testuser@sample.com', 
-                'password': 'testpassword'
+            "/api/auth/users/jwt/create", {
+                "email": "testuser@sample.com", 
+                "password": "testpassword"
             }
         )
 
         if response.status_code == status.HTTP_200_OK:
-            self.token = response.data['access']
+            self.token = response.data["access"]
         else:
             self.token = None
 
         self.note = Note.objects.create(
-            title='Test Note', 
-            body='Test Body', 
+            title="Test Note", 
+            body="Test Body", 
             user_id=self.user
         )
 
 
     def test_list_notes(self):
-        url = '/api/v1/notes/'
+        url = "/api/v1/notes/"
         request = self.factory.get(
             url, 
-            HTTP_AUTHORIZATION=f'Bearer {self.token}'
+            HTTP_AUTHORIZATION=f"Bearer {self.token}"
         )
-        view = NoteViewSet.as_view({'get': 'list'})
+        view = NoteViewSet.as_view({"get": "list"})
 
         response = view(request)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
     def test_create_note(self):
-        url = '/api/v1/notes/'
-        data = {'title': 'New Note', 'body': 'New Body'}
+        url = "/api/v1/notes/"
+        data = {"title": "New Note", "body": "New Body"}
         request = self.factory.post(
             url, 
             data,
-            format='json', 
-            HTTP_AUTHORIZATION=f'Bearer {self.token}'
+            format="json", 
+            HTTP_AUTHORIZATION=f"Bearer {self.token}"
         )
-        view = NoteViewSet.as_view({'post': 'create'})
+        view = NoteViewSet.as_view({"post": "create"})
 
         response = view(request)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_retrieve_note(self):
-        url = f'/api/v1/notes/{self.note.id}/'
+        url = f"/api/v1/notes/{self.note.id}/"
         request = self.factory.get(
             url, 
-            HTTP_AUTHORIZATION=f'Bearer {self.token}'
+            HTTP_AUTHORIZATION=f"Bearer {self.token}"
         )
-        view = NoteViewSet.as_view({'get': 'retrieve'})
+        view = NoteViewSet.as_view({"get": "retrieve"})
 
         response = view(request, pk=self.note.id)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    # def test_update_note(self):
-    #     url = f'/api/v1/notes/{self.note.id}/'
-    #     data = {'title': 'Updated Note', 'body': 'Updated Body'}
-    #     request = self.factory.put(url, data, format='json', HTTP_AUTHORIZATION=f'Token {self.token}')
-    #     view = NoteViewSet.as_view({'put': 'update'})
+    def test_update_note(self):
+        url = f"/api/v1/notes/{self.note.id}/"
+        data = {"title": "Updated Note", "body": "Updated Body"}
+        request = self.factory.put(
+            url, 
+            data, 
+            format="json", 
+            HTTP_AUTHORIZATION=f"Bearer {self.token}"
+        )
+        view = NoteViewSet.as_view({"put": "update"})
 
-    #     response = view(request, pk=self.note.id)
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response = view(request, pk=self.note.id)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     # def test_partial_update_note(self):
-    #     url = f'/api/v1/notes/{self.note.id}/'
-    #     data = {'title': 'Partial Update'}
-    #     request = self.factory.patch(url, data, format='json', HTTP_AUTHORIZATION=f'Token {self.token}')
-    #     view = NoteViewSet.as_view({'patch': 'partial_update'})
+    #     url = f"/api/v1/notes/{self.note.id}/"
+    #     data = {"title": "Partial Update"}
+    #     request = self.factory.patch(url, data, format="json", HTTP_AUTHORIZATION=f"Token {self.token}")
+    #     view = NoteViewSet.as_view({"patch": "partial_update"})
 
     #     response = view(request, pk=self.note.id)
     #     self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     # def test_delete_note(self):
-    #     url = f'/api/v1/notes/{self.note.id}/'
-    #     request = self.factory.delete(url, HTTP_AUTHORIZATION=f'Token {self.token}')
-    #     view = NoteViewSet.as_view({'delete': 'destroy'})
+    #     url = f"/api/v1/notes/{self.note.id}/"
+    #     request = self.factory.delete(url, HTTP_AUTHORIZATION=f"Token {self.token}")
+    #     view = NoteViewSet.as_view({"delete": "destroy"})
 
     #     response = view(request, pk=self.note.id)
     #     self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
