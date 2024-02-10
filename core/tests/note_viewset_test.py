@@ -88,14 +88,19 @@ class NoteViewSetTestCase(TestCase):
         response = view(request, pk=self.note.id)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    # def test_partial_update_note(self):
-    #     url = f"/api/v1/notes/{self.note.id}/"
-    #     data = {"title": "Partial Update"}
-    #     request = self.factory.patch(url, data, format="json", HTTP_AUTHORIZATION=f"Token {self.token}")
-    #     view = NoteViewSet.as_view({"patch": "partial_update"})
+    def test_partial_update_note(self):
+        url = f"/api/v1/notes/{self.note.id}/"
+        data = {"title": "Partial Update"}
+        request = self.factory.patch(
+            url, 
+            data, 
+            format="json", 
+            HTTP_AUTHORIZATION=f"Bearer {self.token}"
+        )
+        view = NoteViewSet.as_view({"patch": "partial_update"})
 
-    #     response = view(request, pk=self.note.id)
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response = view(request, pk=self.note.id)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     # def test_delete_note(self):
     #     url = f"/api/v1/notes/{self.note.id}/"
