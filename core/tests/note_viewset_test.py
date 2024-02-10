@@ -63,13 +63,16 @@ class NoteViewSetTestCase(TestCase):
         response = view(request)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-    # def test_retrieve_note(self):
-    #     url = f'/api/v1/notes/{self.note.id}/'
-    #     request = self.factory.get(url, HTTP_AUTHORIZATION=f'Token {self.token}')
-    #     view = NoteViewSet.as_view({'get': 'retrieve'})
+    def test_retrieve_note(self):
+        url = f'/api/v1/notes/{self.note.id}/'
+        request = self.factory.get(
+            url, 
+            HTTP_AUTHORIZATION=f'Bearer {self.token}'
+        )
+        view = NoteViewSet.as_view({'get': 'retrieve'})
 
-    #     response = view(request, pk=self.note.id)
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response = view(request, pk=self.note.id)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     # def test_update_note(self):
     #     url = f'/api/v1/notes/{self.note.id}/'
