@@ -102,10 +102,13 @@ class NoteViewSetTestCase(TestCase):
         response = view(request, pk=self.note.id)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    # def test_delete_note(self):
-    #     url = f"/api/v1/notes/{self.note.id}/"
-    #     request = self.factory.delete(url, HTTP_AUTHORIZATION=f"Token {self.token}")
-    #     view = NoteViewSet.as_view({"delete": "destroy"})
+    def test_delete_note(self):
+        url = f"/api/v1/notes/{self.note.id}/"
+        request = self.factory.delete(
+            url, 
+            HTTP_AUTHORIZATION=f"Bearer {self.token}"
+        )
+        view = NoteViewSet.as_view({"delete": "destroy"})
 
-    #     response = view(request, pk=self.note.id)
-    #     self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        response = view(request, pk=self.note.id)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
