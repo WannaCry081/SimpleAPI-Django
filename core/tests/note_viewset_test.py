@@ -39,20 +39,29 @@ class NoteViewSetTestCase(TestCase):
 
     def test_list_notes(self):
         url = '/api/v1/notes/'
-        request = self.factory.get(url, HTTP_AUTHORIZATION=f'Bearer {self.token}')
+        request = self.factory.get(
+            url, 
+            HTTP_AUTHORIZATION=f'Bearer {self.token}'
+        )
         view = NoteViewSet.as_view({'get': 'list'})
 
         response = view(request)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    # def test_create_note(self):
-    #     url = '/api/v1/notes/'
-    #     data = {'title': 'New Note', 'body': 'New Body'}
-    #     request = self.factory.post(url, data, format='json', HTTP_AUTHORIZATION=f'Token {self.token}')
-    #     view = NoteViewSet.as_view({'post': 'create'})
 
-    #     response = view(request)
-    #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    def test_create_note(self):
+        url = '/api/v1/notes/'
+        data = {'title': 'New Note', 'body': 'New Body'}
+        request = self.factory.post(
+            url, 
+            data,
+            format='json', 
+            HTTP_AUTHORIZATION=f'Bearer {self.token}'
+        )
+        view = NoteViewSet.as_view({'post': 'create'})
+
+        response = view(request)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     # def test_retrieve_note(self):
     #     url = f'/api/v1/notes/{self.note.id}/'
