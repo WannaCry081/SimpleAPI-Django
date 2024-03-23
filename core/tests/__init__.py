@@ -1,1 +1,0 @@
-from core.tests.note_viewset_test import NoteViewSetTestCase

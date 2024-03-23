@@ -2,6 +2,7 @@
 **/migrations/
 
 *.sqlite3
-*.env
 *.pyc
 *.pyo
+
+/venv

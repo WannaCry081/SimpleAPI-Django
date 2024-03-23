@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from core.models import Note
+from api.models import Note
 import bleach 
 
 class NoteSerializer(serializers.ModelSerializer):

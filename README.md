@@ -36,13 +36,13 @@ SimpleAPI-Django embodies best practices for creating a comprehensive REST API, 
 
    ```bash
    cd SimpleAPI-Django
-   python -m venv env
+   virtualenv venv
    ```
 
 3. **Activate the virtual environment:**
 
     ```bash
-    pipenv install
+    source venv/Scripts/activate
     ```
 
 4. **Install dependencies:**
