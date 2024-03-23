@@ -3,9 +3,9 @@ from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
-from core.api.v1.serializers import NoteSerializer, UserSerializer
-from core.models import Note
-from core.versions import LegacyAPIVersion
+from api.core.v1.serializers import NoteSerializer, UserSerializer
+from api.models import Note
+from api.versions import LegacyAPIVersion
 
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema

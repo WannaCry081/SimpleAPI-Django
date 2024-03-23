@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
-    'core'
+    'api'
 ]
 
 MIDDLEWARE = [
@@ -133,7 +133,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'core.User'
+AUTH_USER_MODEL = 'api.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES' : [
@@ -184,8 +184,8 @@ DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
     'PASSWORD_RESET_CONFIRM_RETYPE' : True,
     'SERIALIZERS': {
-        'user': 'core.api.v1.serializers.UserSerializer',
-        'current_user': 'core.api.v1.serializers.UserSerializer',
+        'user': 'api.core.v1.serializers.UserSerializer',
+        'current_user': 'api.core.v1.serializers.UserSerializer',
     },
 }
 

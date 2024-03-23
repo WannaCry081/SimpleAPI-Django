@@ -2,9 +2,9 @@ from django.test import TestCase
 from rest_framework.test import APIRequestFactory
 from rest_framework import status
 
-from core.models import Note, User
-from core.api.v1.serializers import NoteSerializer
-from core.api.v1.viewsets.note_viewsets import NoteViewSet
+from api.models import Note, User
+from api.core.v1.serializers import NoteSerializer
+from api.core.v1.viewsets.note_viewsets import NoteViewSet
 
 class NoteViewSetTestCase(TestCase):
     def setUp(self):

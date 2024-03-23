@@ -41,7 +41,7 @@ urlpatterns = [
     path('api/', include([
     
         # Routing for core app
-        path('', include('core.urls')),
+        path('', include('api.urls')),
         
         # Djoser API Authentication View 
         path('auth/', include([

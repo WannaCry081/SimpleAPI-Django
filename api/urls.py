@@ -1,5 +1,5 @@
 from django.urls import path, include
-from core.api.v1 import route as api_v1
+from api.core.v1 import route as api_v1
 
 
 urlpatterns = [
